@@ -16,7 +16,17 @@ RgbColor blue(0, 0, colorSaturation);
 RgbColor white(colorSaturation);
 RgbColor black(0);
 
-byte colors[12][3] {{128, 0, 0}, {96, 32, 0}, {64, 64, 0}, {32, 96, 0}, {0, 128, 0}, {0, 96, 32}, {0, 64, 64}, {0, 32, 96}, {0, 0, 128}, {32, 0, 96}, {64, 0, 64}, {96, 0, 32}};
+// Button layout for Hex panel
+//     01   12
+//      02 11
+//  03 04   09 10
+//      05 07
+//     06   08
+
+//  Order corrected for use in indexing arrays
+int order[12] = {0, 11, 1, 10, 2, 3, 8, 9, 4, 6, 5, 7};
+
+byte colors[12][3] = {{128, 0, 0}, {96, 32, 0}, {64, 64, 0}, {32, 96, 0}, {0, 128, 0}, {0, 96, 32}, {0, 64, 64}, {0, 32, 96}, {0, 0, 128}, {32, 0, 96}, {64, 0, 64}, {96, 0, 32}};
   //MPR121 Setup
   Adafruit_MPR121 cap = Adafruit_MPR121();
   // Keeps track of the last pins touched
