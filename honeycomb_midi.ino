@@ -7,13 +7,15 @@
 //NeoPixel Setup
 const uint16_t PixelCount = 12;
 const uint8_t PixelPin = 9;
-#define colorSaturation 128
+
+#define brightness 0.5 // Between 0 and 1
+
 NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod> strip(PixelCount, PixelPin);
 // Set rgb colours
-RgbColor red(colorSaturation, 0, 0);
-RgbColor green(0, colorSaturation, 0);
-RgbColor blue(0, 0, colorSaturation);
-RgbColor white(colorSaturation);
+RgbColor red(255 * brightness, 0, 0);
+RgbColor green(0, 255 * brightness, 0);
+RgbColor blue(0, 0, 255 * brightness);
+RgbColor white(255 * brightness);
 RgbColor black(0);
 
 // Button layout for Hex panel
