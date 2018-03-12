@@ -67,18 +67,18 @@ void setup() {
     //  Serial.println("Set LED blue");
   }
 
-//  if (!cap.begin(0x5A)) {  // NOT WORKING!!!
-//    // Serial.println("MPR121 not found, check wiring?");
-//    for (uint8_t i = 0; i < 3; i++) {
-//      strip.SetPixelColor(0, black);
-//      strip.Show();
-//      delay(200);
-//      strip.SetPixelColor(0, red);
-//      strip.Show();
-//      delay(200);
-//    }
-//    while (1);
-//  }
+    if (!cap.begin(0x5A)) {  // NOT WORKING!!!
+  //    // Serial.println("MPR121 not found, check wiring?");
+  //    for (uint8_t i = 0; i < 3; i++) {
+  //      strip.SetPixelColor(0, black);
+  //      strip.Show();
+  //      delay(200);
+  //      strip.SetPixelColor(0, red);
+  //      strip.Show();
+  //      delay(200);
+  //    }
+  //    while (1);
+    }
 
   MIDIsoftreset();  // Midi Reset
   delay(200);
