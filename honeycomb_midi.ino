@@ -4,6 +4,9 @@
 #include <MIDI.h>
 #include "midi_notes.h"
 
+#include <SoftwareSerial.h>
+SoftwareSerial swSerial(10,16);
+
 //NeoPixel Setup
 const uint16_t PixelCount = 12;
 const uint8_t PixelPin = 9;
@@ -41,23 +44,24 @@ uint16_t currtouched = 0;
 int* song[] = {NOTE_C4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_A4, NOTE_B4, NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5};
 int midiChannel[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}; // midi channel for each button
 int instruments[] = {102, 999, 999, 999, 999, 999, 999, 999, 999, 999 /*Drums*/, 999, 999, 999, 999, 999, 999};
-MIDI_CREATE_INSTANCE(HardwareSerial, Serial1, MIDI1);  //  Serial1 for pro micro Serial output
-
+//MIDI_CREATE_INSTANCE(HardwareSerial, Serial1, MIDI);  //  Serial1 for pro micro Serial output
+MIDI_CREATE_INSTANCE(SoftwareSerial, swSerial, MIDI);
 void setup() {
 
-  MIDI1.begin();
-    Serial.begin(115200);  // needed for hairless midi
+  MIDI.begin();
+  delay(200);
+  Serial.begin(115200);  // needed for hairless midi
   // while (!Serial); // wait for serial attach
-    delay(2000);
+  delay(2000);
 
-      Serial.println();
-      Serial.println("Initializing...");
-      Serial.flush();
+  Serial.println();
+  Serial.println("Initializing...");
+  Serial.flush();
 
   strip.Begin();
   strip.Show();
-    Serial.println();
-    Serial.println("Running...");
+  Serial.println();
+  Serial.println("Running...");
 
   for (int led = 0; led < PixelCount; led++) {
     delay(100);
@@ -84,7 +88,7 @@ void setup() {
   delay(200);
   for (uint8_t i = 0; i < 16; i++) {  // Set instruments for all 16 MIDI channels
     if (instruments[i] < 128) {
-      MIDI1.sendProgramChange(instruments[i], i + 1);
+      MIDI.sendProgramChange(instruments[i], i + 1);
     }
   }
 }
@@ -95,16 +99,16 @@ void loop() {
   for (uint8_t i = 0; i < 12; i++) {
     // it if *is* touched and *wasnt* touched before, alert!
     if ((currtouched & _BV(i)) && !(lasttouched & _BV(i)) ) {
-      MIDI1.sendNoteOn(song[i], 100, midiChannel[i]);
+      MIDI.sendNoteOn(song[i], 100, midiChannel[i]);
       turnOnLED(i);
-                  Serial.print("Pressed ");
-                  Serial.println (i);
+      Serial.print("Pressed ");
+      Serial.println (i);
     }
     if (!(currtouched & _BV(i)) && (lasttouched & _BV(i)) ) {
-      MIDI1.sendNoteOff(song[i], 100, midiChannel[i]);
+      MIDI.sendNoteOff(song[i], 100, midiChannel[i]);
       turnOffLEDs(i);
-                  Serial.print("Released ");
-                  Serial.println (i);
+      Serial.print("Released ");
+      Serial.println (i);
     }
   }
   lasttouched = currtouched;
@@ -126,6 +130,6 @@ void MIDIsoftreset()  // switch off ALL notes on channel 1 to 16
 {
   for (int channel = 0; channel < 16; channel++)
   {
-    MIDI1.sendControlChange(123, 0, channel);
+    MIDI.sendControlChange(123, 0, channel);
   }
 }
