@@ -31,7 +31,9 @@ RgbColor black(0);
 //  Order corrected for use in indexing arrays
 int order[12] = {0, 11, 1, 10, 2, 3, 8, 9, 4, 6, 5, 7};
 
-byte colors[12][3] = {{255 , 0, 0}, {192, 64, 0}, {128, 128, 0}, {64, 192, 0}, {0, 255, 0}, {0, 192, 64}, {0, 128, 128}, {0, 64, 192}, {0, 0, 255}, {64, 0, 192}, {128, 0, 128}, {192, 0, 64}};
+byte colors[12][3] = {{225 , 0, 0}, {177, 59, 0}, {59, 148, 30}, {59, 177, 0}, {0, 255, 0}, {0, 192, 64}, {0, 128, 128}, {0, 64, 192}, {0, 0, 255}, {64, 0, 192}, {128, 0, 128}, {192, 0, 64}};
+//                     red1          red2          green1        green2        green3       green4        blue2          blue1         blue3        blue4         red3           red4
+
 //MPR121 Setup
 Adafruit_MPR121 cap = Adafruit_MPR121();
 // Keeps track of the last pins touched
