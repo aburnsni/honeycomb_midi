@@ -11,7 +11,7 @@ SoftwareSerial swSerial(10,16);
 const uint16_t PixelCount = 12;
 const uint8_t PixelPin = 9;
 
-#define brightness 0.5 // Between 0 and 1
+#define brightness 0.7 // Between 0 and 1
 
 NeoPixelBus<NeoGrbFeature, Neo800KbpsMethod> strip(PixelCount, PixelPin);
 // Set rgb colours
