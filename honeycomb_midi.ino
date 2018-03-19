@@ -30,6 +30,9 @@ RgbColor black(0);
 
 //  Order corrected for use in indexing arrays
 int order[12] = {0, 11, 1, 10, 2, 3, 8, 9, 4, 6, 5, 7};
+bool active[12] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};  //all
+//bool active[12] = {0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0};  //center only
+//bool active[12] = {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0};  //bottom four
 
 byte colors[12][3] = {{225 , 0, 0}, {177, 59, 0}, {59, 148, 30}, {59, 177, 0}, {0, 255, 0}, {0, 192, 64}, {0, 128, 128}, {0, 64, 192}, {0, 0, 255}, {64, 0, 192}, {128, 0, 128}, {192, 0, 64}};
 //                     red1          red2          green1        green2        green3       green4        blue2          blue1         blue3        blue4         red3           red4
@@ -66,25 +69,27 @@ void setup() {
   Serial.println("Running...");
 
   for (int led = 0; led < PixelCount; led++) {
-    delay(100);
-    strip.SetPixelColor(led, RgbColor(colors[led][0]* brightness, colors[led][1]* brightness, colors[led][2]* brightness));
-    strip.Show();
-    // strip.SetPixelColor(i, black);
-    //  Serial.println("Set LED blue");
+    if (active[led]) {
+      delay(100);
+      strip.SetPixelColor(led, RgbColor(colors[led][0]* brightness, colors[led][1]* brightness, colors[led][2]* brightness));
+      strip.Show();
+      // strip.SetPixelColor(i, black);
+      //  Serial.println("Set LED blue");
+    }
   }
 
-    if (!cap.begin(0x5A)) {  // NOT WORKING!!!
-  //    // Serial.println("MPR121 not found, check wiring?");
-  //    for (uint8_t i = 0; i < 3; i++) {
-  //      strip.SetPixelColor(0, black);
-  //      strip.Show();
-  //      delay(200);
-  //      strip.SetPixelColor(0, red);
-  //      strip.Show();
-  //      delay(200);
-  //    }
-  //    while (1);
-    }
+  if (!cap.begin(0x5A)) {  // NOT WORKING!!!
+    //    // Serial.println("MPR121 not found, check wiring?");
+    //    for (uint8_t i = 0; i < 3; i++) {
+    //      strip.SetPixelColor(0, black);
+    //      strip.Show();
+    //      delay(200);
+    //      strip.SetPixelColor(0, red);
+    //      strip.Show();
+    //      delay(200);
+    //    }
+    //    while (1);
+  }
 
   MIDIsoftreset();  // Midi Reset
   delay(200);
@@ -99,18 +104,20 @@ void loop() {
   currtouched = cap.touched();
 
   for (uint8_t i = 0; i < 12; i++) {
-    // it if *is* touched and *wasnt* touched before, alert!
-    if ((currtouched & _BV(i)) && !(lasttouched & _BV(i)) ) {
-      MIDI.sendNoteOn(song[i], 100, midiChannel[i]);
-      turnOnLED(i);
-      Serial.print("Pressed ");
-      Serial.println (i);
-    }
-    if (!(currtouched & _BV(i)) && (lasttouched & _BV(i)) ) {
-      MIDI.sendNoteOff(song[i], 100, midiChannel[i]);
-      turnOffLEDs(i);
-      Serial.print("Released ");
-      Serial.println (i);
+    if (active[i]) {
+      // it if *is* touched and *wasnt* touched before, alert!
+      if ((currtouched & _BV(i)) && !(lasttouched & _BV(i)) ) {
+        MIDI.sendNoteOn(song[i], 100, midiChannel[i]);
+        turnOnLED(i);
+        Serial.print("Pressed ");
+        Serial.println (i);
+      }
+      if (!(currtouched & _BV(i)) && (lasttouched & _BV(i)) ) {
+        MIDI.sendNoteOff(song[i], 100, midiChannel[i]);
+        turnOffLEDs(i);
+        Serial.print("Released ");
+        Serial.println (i);
+      }
     }
   }
   lasttouched = currtouched;
