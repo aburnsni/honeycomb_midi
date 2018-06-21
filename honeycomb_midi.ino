@@ -46,7 +46,7 @@ uint16_t currtouched = 0;
 
 
 //MIDI Setup
-int* song[] = {NOTE_C4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_G4, NOTE_A4, NOTE_B4, NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5};
+int* song[] = {NOTE_C4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_A4, NOTE_G4, NOTE_B4, NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5};
 int midiChannel[] = {6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6}; // midi channel for each button
 int instruments[] = {102, 999, 999, 999, 999, 999, 999, 999, 999, 999 /*Drums*/, 999, 999, 999, 999, 999, 999};
 //MIDI_CREATE_INSTANCE(HardwareSerial, Serial1, MIDI);  //  Serial1 for pro micro Serial output
