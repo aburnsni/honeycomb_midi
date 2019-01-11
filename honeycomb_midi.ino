@@ -29,7 +29,7 @@ RgbColor black(0);
 //     06   08
 
 //  Order corrected for use in indexing arrays
-int order[12] = {0, 11, 1, 10, 2, 3, 8, 9, 4, 6, 5, 7};
+//int order[12] = {0, 11, 1, 10, 2, 3, 8, 9, 4, 6, 5, 7};
 bool active[12] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};  //all
 //bool active[12] = {0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1, 0};  //center only
 //bool active[12] = {0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0};  //bottom four
@@ -46,8 +46,10 @@ uint16_t currtouched = 0;
 
 
 //MIDI Setup
-int* song[] = {NOTE_C4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_A4, NOTE_G4, NOTE_B4, NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5};
-int midiChannel[] = {6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6}; // midi channel for each button
+// int* song[] = {NOTE_C4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_A4, NOTE_G4, NOTE_B4, NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5};
+int* song[] = {NOTE_FS3, NOTE_FS4, NOTE_DS3, NOTE_DS4, NOTE_CS4, NOTE_CS3, NOTE_AS3, NOTE_AS2, NOTE_GS3, NOTE_GS2, NOTE_FS3, NOTE_FS2};
+//int midiChannel[] = {6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6}; // midi channel for each button
+int midiChannel[] = {7, 6, 7, 6, 6, 7, 6, 7, 6, 7, 6, 7};
 int instruments[] = {102, 999, 999, 999, 999, 999, 999, 999, 999, 999 /*Drums*/, 999, 999, 999, 999, 999, 999};
 //MIDI_CREATE_INSTANCE(HardwareSerial, Serial1, MIDI);  //  Serial1 for pro micro Serial output
 MIDI_CREATE_INSTANCE(SoftwareSerial, swSerial, MIDI);
@@ -91,13 +93,13 @@ void setup() {
     //    while (1);
   }
 
-  MIDIsoftreset();  // Midi Reset
-  delay(200);
-  for (uint8_t i = 0; i < 16; i++) {  // Set instruments for all 16 MIDI channels
-    if (instruments[i] < 128) {
-      MIDI.sendProgramChange(instruments[i], i + 1);
-    }
-  }
+  // MIDIsoftreset();  // Midi Reset
+  // delay(200);
+  // for (uint8_t i = 0; i < 16; i++) {  // Set instruments for all 16 MIDI channels
+  //   if (instruments[i] < 128) {
+  //     MIDI.sendProgramChange(instruments[i], i + 1);
+  //   }
+  // }
 }
 
 void loop() {
@@ -135,10 +137,10 @@ void turnOffLEDs( int led ) {
   delay(10);
 }
 
-void MIDIsoftreset()  // switch off ALL notes on channel 1 to 16
-{
-  for (int channel = 0; channel < 16; channel++)
-  {
-    MIDI.sendControlChange(123, 0, channel);
-  }
-}
+// void MIDIsoftreset()  // switch off ALL notes on channel 1 to 16
+// {
+//   for (int channel = 0; channel < 16; channel++)
+//   {
+//     MIDI.sendControlChange(123, 0, channel);
+//   }
+// }
