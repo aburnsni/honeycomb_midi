@@ -47,7 +47,8 @@ uint16_t currtouched = 0;
 
 //MIDI Setup
 // int* song[] = {NOTE_C4, NOTE_D4, NOTE_E4, NOTE_F4, NOTE_A4, NOTE_G4, NOTE_B4, NOTE_C5, NOTE_D5, NOTE_E5, NOTE_F5, NOTE_G5};
-int* song[] = {NOTE_FS3, NOTE_FS4, NOTE_DS3, NOTE_DS4, NOTE_CS4, NOTE_CS3, NOTE_AS3, NOTE_AS2, NOTE_GS3, NOTE_GS2, NOTE_FS3, NOTE_FS2};
+//int* song[] = {NOTE_FS3, NOTE_FS4, NOTE_DS3, NOTE_DS4, NOTE_CS4, NOTE_CS3, NOTE_AS3, NOTE_AS2, NOTE_GS3, NOTE_GS2, NOTE_FS3, NOTE_FS2};
+int* song[] = {NOTE_AS2, NOTE_AS3, NOTE_GS2, NOTE_GS3, NOTE_FS3, NOTE_FS2, NOTE_E3, NOTE_E2, NOTE_D3, NOTE_D2, NOTE_C3, NOTE_C2};
 //int midiChannel[] = {6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6}; // midi channel for each button
 int midiChannel[] = {7, 6, 7, 6, 6, 7, 6, 7, 6, 7, 6, 7};
 int instruments[] = {102, 999, 999, 999, 999, 999, 999, 999, 999, 999 /*Drums*/, 999, 999, 999, 999, 999, 999};
